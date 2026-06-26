@@ -15,7 +15,6 @@ function divide(operand1, operand2) {
 }
 
 function operate(operator, operand1, operand2) {
-  console.log(operator, operand1, operand2);
   if (operand2 === 0 && operator === "/") {
     return "Error: Division by zero";
   }
@@ -53,6 +52,19 @@ function clear() {
   num1 = num2 = operator = null;
 }
 
+function formatResult(result) {
+  if (typeof result != "number") return result;
+  const resultString = result.toString();
+  const resultDigits = resultString.split(".");
+
+  // if floatig point number
+  if (resultDigits.length > 1) {
+    return result.toFixed(2);
+  } else {
+    return result;
+  }
+}
+
 const keys = document.querySelectorAll(".key");
 const operatorKeys = document.querySelectorAll(".operator");
 const calculateBtn = document.querySelector(".calculate");
@@ -72,7 +84,8 @@ calculateBtn.addEventListener("click", () => {
   const result = operate(operator, Number(num1), Number(num2));
 
   resultDisplay.style.display = "block";
-  resultDisplay.textContent = result.toFixed(2);
+  
+  resultDisplay.textContent = formatResult(result);
 });
 
 clearBtn.addEventListener("click", () => clear());
@@ -109,19 +122,22 @@ operatorKeys.forEach((key) => {
       );
 
       if (numbers.length > 1) {
-        
         setOperationValues();
         const result = operate(operator, Number(num1), Number(num2));
+        const textResult = formatResult(result);
 
-        resultDisplay.textContent = typeof result === 'number' ? result.toFixed(2) : result;
+        operationDisplay.textContent = `${textResult} ${newOperator}`;
       } else {
         operationDisplay.textContent = operation.replace(
           oldOperator,
           newOperator,
         );
       }
+
     } else {
       operationDisplay.textContent += newOperator.padStart(2);
     }
   });
 });
+
+
