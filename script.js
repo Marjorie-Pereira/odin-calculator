@@ -35,10 +35,11 @@ function operate(operator, operand1, operand2) {
 
 const keys = document.querySelectorAll(".key");
 const operatorKeys = document.querySelectorAll(".operator");
-const operationDisplay = document.querySelector(".operation");
-
-const resultDisplay = document.querySelector(".result");
 const calculateBtn = document.querySelector(".calculate");
+const clearBtn = document.querySelector(".clear");
+
+const operationDisplay = document.querySelector(".operation");
+const resultDisplay = document.querySelector(".result");
 
 let num1;
 let num2;
@@ -48,7 +49,7 @@ console.log(operationDisplay);
 calculateBtn.addEventListener("click", () => {
   [num1, _, num2] = operationDisplay.textContent.split(" ");
   // return if calculation not complete (must have 2 numbers and operator)
-  if (!num2) return;
+  if (!operator || !num2) return;
 
   console.log(num1, num2, operator);
 
@@ -58,14 +59,24 @@ calculateBtn.addEventListener("click", () => {
   resultDisplay.innerText = result;
 });
 
+clearBtn.addEventListener("click", () => {
+  operationDisplay.innerHTML = " ";
+  resultDisplay.style.display = "none";
+  resultDisplay.innerText = " ";
+  num1 = num2 = operator = null
+  console.log(num1, num2, operator)
+});
+
 keys.forEach((key) => {
   key.addEventListener("click", () => {
     // return if all three elements of the calculation are displayed
-    const digits = operationDisplay.textContent.split(" ");
+    const digits = operationDisplay.innerText.trim().split(" ");
+    console.log(digits);
     if (num2) return;
 
     const keyTextContent = key.textContent.trim();
 
+    // adds space between operator and last operand
     const newValue =
       digits.length == 2 ? keyTextContent.padStart(2) : keyTextContent;
     operationDisplay.innerText += newValue;
@@ -74,7 +85,8 @@ keys.forEach((key) => {
 
 operatorKeys.forEach((key) => {
   key.addEventListener("click", () => {
-    if (operator || operationDisplay.textContent === "") return;
+    console.log(operationDisplay.innerHTML)
+    if (operator || operationDisplay.innerHTML.trim() === "") return;
     const textContent = key.textContent.trim();
     const operatorValue =
       textContent === "×" ? "*" : textContent === "÷" ? "/" : textContent;
