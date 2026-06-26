@@ -61,7 +61,6 @@ const keys = document.querySelectorAll(".key");
 const operatorKeys = document.querySelectorAll(".operator");
 const calculateBtn = document.querySelector(".calculate");
 const clearBtn = document.querySelector(".clear");
-
 const operationDisplay = document.querySelector(".operation");
 const resultDisplay = document.querySelector(".result");
 
@@ -114,11 +113,11 @@ operatorKeys.forEach((key) => {
       );
 
       if (numbers.length > 1) {
-        // perform calculus
+        
         setOperationValues();
         const result = operate(operator, Number(num1), Number(num2));
 
-        operationDisplay.textContent = `${result} ${newOperator}`;
+        operationDisplay.textContent = `${result.toFixed(2)} ${newOperator}`;
       } else {
         operationDisplay.textContent = operation.replace(
           oldOperator,
