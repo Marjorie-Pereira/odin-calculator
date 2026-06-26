@@ -101,18 +101,18 @@ operatorKeys.forEach((key) => {
     if (operation.trim() === "") return;
 
     const characters = operation.split(" ");
+    const oldOperator = characters.find((char) => isNaN(char));
     const textContent = key.textContent.trim();
-    console.log(characters);
 
-    if (operator) {
+    if (oldOperator) {
       const numbers = characters.filter(
-        (char) => !isNaN(Number(char)) && char.trim() != "",
+        (char) => !isNaN(char) && char.trim() != "",
       );
+      console.log(numbers);
       if (numbers.length > 1) {
         // perform calculus
         console.log(numbers);
       } else {
-        const oldOperator = characters[characters.length - 1];
         console.log(characters, oldOperator);
         operationDisplay.textContent = operation.replace(
           oldOperator,
