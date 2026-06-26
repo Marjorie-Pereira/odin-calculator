@@ -15,6 +15,11 @@ function divide(operand1, operand2) {
 }
 
 function operate(operator, operand1, operand2) {
+  console.log(operator, operand1, operand2);
+  if (operand2 === 0 && operator === "/") {
+    return "Error: Division by zero";
+  }
+
   switch (operator) {
     case "+":
       return add(operand1, operand2);
@@ -44,34 +49,33 @@ const resultDisplay = document.querySelector(".result");
 let num1;
 let num2;
 let operator;
-console.log(operationDisplay);
 
 calculateBtn.addEventListener("click", () => {
   [num1, _, num2] = operationDisplay.textContent.split(" ");
   // return if calculation not complete (must have 2 numbers and operator)
   if (!operator || !num2) return;
 
-  console.log(num1, num2, operator);
-
   const result = operate(operator, Number(num1), Number(num2));
-  console.log(result);
+
   resultDisplay.style.display = "block";
-  resultDisplay.innerText = result;
+  resultDisplay.textContent = result;
 });
 
 clearBtn.addEventListener("click", () => {
-  operationDisplay.innerHTML = " ";
+  operationDisplay.textContent = "";
   resultDisplay.style.display = "none";
-  resultDisplay.innerText = " ";
-  num1 = num2 = operator = null
+
+  resultDisplay.textContent = "";
+  num1 = num2 = operator = null;
   console.log(num1, num2, operator)
 });
 
+// update display with numbers typed
 keys.forEach((key) => {
   key.addEventListener("click", () => {
     // return if all three elements of the calculation are displayed
-    const digits = operationDisplay.innerText.trim().split(" ");
-    console.log(digits);
+    const digits = operationDisplay.textContent.trim().split(" ");
+
     if (num2) return;
 
     const keyTextContent = key.textContent.trim();
@@ -79,20 +83,39 @@ keys.forEach((key) => {
     // adds space between operator and last operand
     const newValue =
       digits.length == 2 ? keyTextContent.padStart(2) : keyTextContent;
-    operationDisplay.innerText += newValue;
+    operationDisplay.textContent += newValue;
   });
 });
 
 operatorKeys.forEach((key) => {
   key.addEventListener("click", () => {
-    console.log(operationDisplay.innerHTML)
-    if (operator || operationDisplay.innerHTML.trim() === "") return;
+    const operation = operationDisplay.textContent;
+    if (operation.trim() === "") return;
+
     const textContent = key.textContent.trim();
+
+    if (operator) {
+      const characters = operation.split("");
+      const numbers = characters.filter(
+        (char) => !isNaN(Number(char)) && char.trim() != "",
+      );
+      if (numbers.length > 1) {
+        // perform calculus
+        console.log(numbers)
+      } else {
+        const oldOperator = characters[characters.length - 1];
+        console.log(characters, oldOperator);
+        operationDisplay.textContent = operation.replace(
+          oldOperator,
+          textContent,
+        );
+      }
+    } else {
+      operationDisplay.textContent += key.textContent.padStart(2);
+    }
+
     const operatorValue =
       textContent === "×" ? "*" : textContent === "÷" ? "/" : textContent;
-
     operator = operatorValue;
-
-    operationDisplay.innerText += key.textContent.padStart(2);
   });
 });
