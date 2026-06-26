@@ -55,7 +55,7 @@ keys.forEach((key) => {
   key.addEventListener("click", () => {
     // return if all three elements of the calculation are displayed
     const digits = operationDisplay.textContent.split(" ");
-    if (digits.length === 3) return;
+    if (num2) return;
 
     const keyTextContent = key.textContent.trim();
     
@@ -71,7 +71,7 @@ console.log(num1, operator, num2);
 
 operatorKeys.forEach((key) => {
   key.addEventListener("click", () => {
-    if(operator) return
+    if(operator || operationDisplay.textContent === '') return
     const textContent = key.textContent.trim();
     const operatorValue = textContent === '×' ? '*' : textContent === '' ? '/' : textContent
     operator = key.textContent;
