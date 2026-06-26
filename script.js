@@ -40,7 +40,7 @@ function operate(operator, operand1, operand2) {
 
 function setOperationValues() {
   [num1, operatorTextValue, num2] = operationDisplay.textContent.split(" ");
-  console.log(num1, num2, operatorTextValue);
+
   const operatorValue =
     operatorTextValue === "×"
       ? "*"
@@ -79,19 +79,16 @@ clearBtn.addEventListener("click", () => {
 
   resultDisplay.textContent = "";
   num1 = num2 = operator = null;
-  console.log(num1, num2, operator);
 });
 
 // update display with numbers typed
 keys.forEach((key) => {
   key.addEventListener("click", () => {
-    // return if all three elements of the calculation are displayed
     const digits = operationDisplay.textContent.trim().split(" ");
 
     if (resultDisplay.style.display === "block") return;
 
     const keyTextContent = key.textContent.trim();
-    console.log(keyTextContent, digits);
 
     // adds space between operator and last operand
     const newValue =
