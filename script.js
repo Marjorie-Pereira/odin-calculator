@@ -117,7 +117,7 @@ operatorKeys.forEach((key) => {
         setOperationValues();
         const result = operate(operator, Number(num1), Number(num2));
 
-        operationDisplay.textContent = `${result.toFixed(2)} ${newOperator}`;
+        resultDisplay.textContent = typeof result === 'number' ? result.toFixed(2) : result;
       } else {
         operationDisplay.textContent = operation.replace(
           oldOperator,
