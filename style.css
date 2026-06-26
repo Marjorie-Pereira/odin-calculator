@@ -83,3 +83,10 @@ button:active {
 .calculate:active {
   background-color: rgb(181, 113, 25);
 }
+
+.creator {
+  text-align: end;
+  margin-top: 10px;
+  font-weight: 300;
+  font-family: cursive;
+}
