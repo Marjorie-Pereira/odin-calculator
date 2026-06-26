@@ -48,10 +48,14 @@ console.log(operationDisplay);
 calculateBtn.addEventListener("click", () => {
   [num1, _, num2] = operationDisplay.textContent.split(" ");
   // return if calculation not complete (must have 2 numbers and operator)
-  if(!num2) return
+  if (!num2) return;
 
+  console.log(num1, num2, operator);
+
+  const result = operate(operator, Number(num1), Number(num2));
+  console.log(result);
   resultDisplay.style.display = "block";
-  resultDisplay.innerText = "placeholder";
+  resultDisplay.innerText = result;
 });
 
 keys.forEach((key) => {
@@ -74,7 +78,7 @@ operatorKeys.forEach((key) => {
     const textContent = key.textContent.trim();
     const operatorValue =
       textContent === "×" ? "*" : textContent === "÷" ? "/" : textContent;
-    
+
     operator = operatorValue;
 
     operationDisplay.innerText += key.textContent.padStart(2);
