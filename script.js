@@ -46,9 +46,12 @@ let operator;
 console.log(operationDisplay);
 
 calculateBtn.addEventListener("click", () => {
-  [num1, _, num2] = operationDisplay.textContent.split(" ")
-  console.log(num1, num2)
+  [num1, _, num2] = operationDisplay.textContent.split(" ");
+  // return if calculation not complete (must have 2 numbers and operator)
+  if(!num2) return
+
   resultDisplay.style.display = "block";
+  resultDisplay.innerText = "placeholder";
 });
 
 keys.forEach((key) => {
@@ -58,27 +61,22 @@ keys.forEach((key) => {
     if (num2) return;
 
     const keyTextContent = key.textContent.trim();
-    
 
-    const newValue = digits.length == 2 ? keyTextContent.padStart(2) : keyTextContent;
+    const newValue =
+      digits.length == 2 ? keyTextContent.padStart(2) : keyTextContent;
     operationDisplay.innerText += newValue;
   });
 });
 
-
-
-console.log(num1, operator, num2);
-
 operatorKeys.forEach((key) => {
   key.addEventListener("click", () => {
-    if(operator || operationDisplay.textContent === '') return
+    if (operator || operationDisplay.textContent === "") return;
     const textContent = key.textContent.trim();
-    const operatorValue = textContent === '×' ? '*' : textContent === '' ? '/' : textContent
-    operator = key.textContent;
+    const operatorValue =
+      textContent === "×" ? "*" : textContent === "÷" ? "/" : textContent;
     
+    operator = operatorValue;
 
     operationDisplay.innerText += key.textContent.padStart(2);
   });
 });
-
-
