@@ -77,7 +77,7 @@ calculateBtn.addEventListener("click", () => {
   const result = operate(operator, Number(num1), Number(num2));
 
   resultDisplay.style.display = "block";
-  resultDisplay.textContent = result;
+  resultDisplay.textContent = result.toFixed(2);
 });
 
 clearBtn.addEventListener("click", () => clear());
