@@ -50,6 +50,13 @@ function setOperationValues() {
   operator = operatorValue;
 }
 
+function clear() {
+  operationDisplay.textContent = "";
+  resultDisplay.style.display = "none";
+  resultDisplay.textContent = "";
+  num1 = num2 = operator = null;
+}
+
 const keys = document.querySelectorAll(".key");
 const operatorKeys = document.querySelectorAll(".operator");
 const calculateBtn = document.querySelector(".calculate");
@@ -73,20 +80,14 @@ calculateBtn.addEventListener("click", () => {
   resultDisplay.textContent = result;
 });
 
-clearBtn.addEventListener("click", () => {
-  operationDisplay.textContent = "";
-  resultDisplay.style.display = "none";
-
-  resultDisplay.textContent = "";
-  num1 = num2 = operator = null;
-});
+clearBtn.addEventListener("click", () => clear());
 
 // update display with numbers typed
 keys.forEach((key) => {
   key.addEventListener("click", () => {
     const digits = operationDisplay.textContent.trim().split(" ");
 
-    if (resultDisplay.style.display === "block") return;
+    if (resultDisplay.style.display === "block") clear();
 
     const keyTextContent = key.textContent.trim();
 
