@@ -51,8 +51,16 @@ let num2;
 let operator;
 
 calculateBtn.addEventListener("click", () => {
-  [num1, _, num2] = operationDisplay.textContent.split(" ");
-  // return if calculation not complete (must have 2 numbers and operator)
+  [num1, operatorTextValue, num2] = operationDisplay.textContent.split(" ");
+
+  const operatorValue =
+    operatorTextValue === "×"
+      ? "*"
+      : operatorTextValue === "÷"
+        ? "/"
+        : operatorTextValue;
+  operator = operatorValue;
+
   if (!operator || !num2) return;
 
   const result = operate(operator, Number(num1), Number(num2));
@@ -67,7 +75,7 @@ clearBtn.addEventListener("click", () => {
 
   resultDisplay.textContent = "";
   num1 = num2 = operator = null;
-  console.log(num1, num2, operator)
+  console.log(num1, num2, operator);
 });
 
 // update display with numbers typed
@@ -92,16 +100,17 @@ operatorKeys.forEach((key) => {
     const operation = operationDisplay.textContent;
     if (operation.trim() === "") return;
 
+    const characters = operation.split(" ");
     const textContent = key.textContent.trim();
+    console.log(characters);
 
     if (operator) {
-      const characters = operation.split("");
       const numbers = characters.filter(
         (char) => !isNaN(Number(char)) && char.trim() != "",
       );
       if (numbers.length > 1) {
         // perform calculus
-        console.log(numbers)
+        console.log(numbers);
       } else {
         const oldOperator = characters[characters.length - 1];
         console.log(characters, oldOperator);
@@ -113,9 +122,5 @@ operatorKeys.forEach((key) => {
     } else {
       operationDisplay.textContent += key.textContent.padStart(2);
     }
-
-    const operatorValue =
-      textContent === "×" ? "*" : textContent === "÷" ? "/" : textContent;
-    operator = operatorValue;
   });
 });
