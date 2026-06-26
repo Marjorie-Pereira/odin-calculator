@@ -38,6 +38,18 @@ function operate(operator, operand1, operand2) {
   }
 }
 
+function setOperationValues() {
+  [num1, operatorTextValue, num2] = operationDisplay.textContent.split(" ");
+  console.log(num1, num2, operatorTextValue);
+  const operatorValue =
+    operatorTextValue === "×"
+      ? "*"
+      : operatorTextValue === "÷"
+        ? "/"
+        : operatorTextValue;
+  operator = operatorValue;
+}
+
 const keys = document.querySelectorAll(".key");
 const operatorKeys = document.querySelectorAll(".operator");
 const calculateBtn = document.querySelector(".calculate");
@@ -51,15 +63,7 @@ let num2;
 let operator;
 
 calculateBtn.addEventListener("click", () => {
-  [num1, operatorTextValue, num2] = operationDisplay.textContent.split(" ");
-
-  const operatorValue =
-    operatorTextValue === "×"
-      ? "*"
-      : operatorTextValue === "÷"
-        ? "/"
-        : operatorTextValue;
-  operator = operatorValue;
+  setOperationValues();
 
   if (!operator || !num2) return;
 
@@ -84,9 +88,10 @@ keys.forEach((key) => {
     // return if all three elements of the calculation are displayed
     const digits = operationDisplay.textContent.trim().split(" ");
 
-    if (num2) return;
+    if (resultDisplay.style.display === "block") return;
 
     const keyTextContent = key.textContent.trim();
+    console.log(keyTextContent, digits);
 
     // adds space between operator and last operand
     const newValue =
@@ -98,29 +103,32 @@ keys.forEach((key) => {
 operatorKeys.forEach((key) => {
   key.addEventListener("click", () => {
     const operation = operationDisplay.textContent;
-    if (operation.trim() === "") return;
+    if (operation.trim() === "" || resultDisplay.style.display === "block")
+      return;
 
     const characters = operation.split(" ");
     const oldOperator = characters.find((char) => isNaN(char));
-    const textContent = key.textContent.trim();
+    const newOperator = key.textContent.trim();
 
     if (oldOperator) {
       const numbers = characters.filter(
         (char) => !isNaN(char) && char.trim() != "",
       );
-      console.log(numbers);
+
       if (numbers.length > 1) {
         // perform calculus
-        console.log(numbers);
+        setOperationValues();
+        const result = operate(operator, Number(num1), Number(num2));
+
+        operationDisplay.textContent = `${result} ${newOperator}`;
       } else {
-        console.log(characters, oldOperator);
         operationDisplay.textContent = operation.replace(
           oldOperator,
-          textContent,
+          newOperator,
         );
       }
     } else {
-      operationDisplay.textContent += key.textContent.padStart(2);
+      operationDisplay.textContent += newOperator.padStart(2);
     }
   });
 });
