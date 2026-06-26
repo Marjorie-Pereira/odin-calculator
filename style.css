@@ -13,7 +13,7 @@ h1 {
 }
 .calculator {
   background-color: darkslategrey;
-  width: 500px;
+  width: 400px;
   margin: auto;
   margin-top: 10vh;
   color: #fff;
@@ -27,10 +27,12 @@ h1 {
   background-color: slategrey;
   margin-bottom: 1rem;
   padding: 1rem;
+  
 }
 
-.operation {
-  margin-bottom: 1rem;
+.result {
+  display: none;
+  margin-top: 0.5rem;
 }
 
 .row {

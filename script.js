@@ -14,25 +14,71 @@ function divide(operand1, operand2) {
   return operand1 / operand2;
 }
 
-const num1;
-const num2;
-const operator;
-
 function operate(operator, operand1, operand2) {
-  switch(operator) {
-    case '+':
+  switch (operator) {
+    case "+":
       return add(operand1, operand2);
       break;
-    case '-':
+    case "-":
       return subtract(operand1, operand2);
       break;
-    case '*':
+    case "*":
       return multiply(operand1, operand2);
       break;
-    case '/':
+    case "/":
       return divide(operand1, operand2);
       break;
     default:
-      return 'Invalid operator';
+      return "Invalid operator";
   }
 }
+
+const keys = document.querySelectorAll(".key");
+const operatorKeys = document.querySelectorAll(".operator");
+const operationDisplay = document.querySelector(".operation");
+
+const resultDisplay = document.querySelector(".result");
+const calculateBtn = document.querySelector(".calculate");
+
+let num1;
+let num2;
+let operator;
+console.log(operationDisplay);
+
+calculateBtn.addEventListener("click", () => {
+  [num1, _, num2] = operationDisplay.textContent.split(" ")
+  console.log(num1, num2)
+  resultDisplay.style.display = "block";
+});
+
+keys.forEach((key) => {
+  key.addEventListener("click", () => {
+    // return if all three elements of the calculation are displayed
+    const digits = operationDisplay.textContent.split(" ");
+    if (digits.length === 3) return;
+
+    const keyTextContent = key.textContent.trim();
+    
+
+    const newValue = digits.length == 2 ? keyTextContent.padStart(2) : keyTextContent;
+    operationDisplay.innerText += newValue;
+  });
+});
+
+
+
+console.log(num1, operator, num2);
+
+operatorKeys.forEach((key) => {
+  key.addEventListener("click", () => {
+    if(operator) return
+    const textContent = key.textContent.trim();
+    const operatorValue = textContent === '×' ? '*' : textContent === '' ? '/' : textContent
+    operator = key.textContent;
+    
+
+    operationDisplay.innerText += key.textContent.padStart(2);
+  });
+});
+
+
